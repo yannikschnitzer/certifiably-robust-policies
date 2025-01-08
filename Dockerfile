@@ -38,6 +38,11 @@ WORKDIR /TACAS25
 RUN git clone https://github.com/yannikschnitzer/PRISM-updmps.git
 WORKDIR /TACAS25/PRISM-updmps
 RUN git checkout artifact_eval
-WORKDIR /TACAS25/PRISM-updmps/PRISM
+RUN pip install -r requirements.txt
+
+WORKDIR /TACAS25/PRISM-updmps/prism
+RUN make
+
+
 
 

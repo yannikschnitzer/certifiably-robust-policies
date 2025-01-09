@@ -18,14 +18,18 @@ The artifact contains our software and third-party software used internally. We 
 * **RAM**: 16GB
 * **Disk Space**: 32GB
 
-The setup via Docker installs all required software and dependencies. This should complete relatively quick in ~10 minutes.
+The setup via Docker installs all required software and dependencies. This should complete relatively quick (~10 minutes).
 
 ## Structure and Content
 
 The artifact contains a `Dockerfile` which automatically sets up the environment for evaluation. The environment is structured as follows
 
 * **TACAS25** - Main Folder containing the artifact.
-  * ***PRISM-upmdps***: Repository containing our implementation and experiments, building up on the PRISM model checker.
+  * **certifably-robust-policies** - Repository folder
+    * ***PRISM-upmdps***: Repository containing our implementation and experiments, building up on the PRISM model checker.
+    * ***Performance_Plotting***: Scripts for visualising the resulting learning process as per Figures 5 and 7.
+    * ***Risk_Plotting***: Scripts to produce a visualisation of the resulting risk bounds as per Theorems 1 and 2, depicted in Figure 4.
+    * 
 ## Getting Started
 
 After unpacking the artifact, the `Dockerfile` can be turned into an image by running:
@@ -49,7 +53,7 @@ We provide seperate smoke tests for the main implementation (Java) and the visua
 To run the smoke tests for the main implementation, execute the following commands:
 
 ```bash
-    cd prism
+    cd certifiably-robust-policies/PRISM-upmdps/prism
     PRISM_MAINCLASS=lava.LearnVerify bin/prism -smoke
 ```
 The script will run one small test benchmark with a reduced number of iterations which should complete in a few minutes. If finished successfully, the script should print:
@@ -57,7 +61,7 @@ The script will run one small test benchmark with a reduced number of iterations
 PRISM smoke test finished successfully :)
 ```
 
-To run the smoke tests for the visualistion scripts, run the following (**back in the main /TACAS25 directory**):
+To run the smoke tests for the visualistion scripts, run the following (**back in the main TACAS25/certifiably-robust-policies/ directory**):
 ```bash
     python3 smoke_test.py
 ```

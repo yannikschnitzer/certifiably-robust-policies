@@ -18,7 +18,7 @@ The artifact contains our software and third-party software used internally. We 
 * **RAM**: 16GB
 * **Disk Space**: 32GB
 
-The setup via Docker installs all required software and dependencies. This should complete relatively quickly in ~10 minutes.
+The setup via Docker installs all required software and dependencies. This should complete relatively quick in ~10 minutes.
 
 ## Structure and Content
 

@@ -14,3 +14,4 @@ if __name__ == "__main__":
     print("Numpy version: ", np.__version__)
     print("Matplotlib version: ", matplotlib.__version__)
     print("Scipy version: ", sc.__version__)
+    print("Python smoke test finished successfully :)")

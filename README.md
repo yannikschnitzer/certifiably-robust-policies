@@ -27,9 +27,9 @@ The artifact contains a `Dockerfile` which automatically sets up the environment
 * **TACAS25** - Main Folder containing the artifact.
   * **certifably-robust-policies** - Repository folder
     * ***PRISM-upmdps***: Repository containing our implementation and experiments, building up on the PRISM model checker.
-    * ***Performance_Plotting***: Scripts for visualising the resulting learning process as per Figures 5 and 7.
+    * ***Performance_Plotting***: Scripts for visualising the resulting learning process as depicted in Figures 5 and 7.
     * ***Risk_Plotting***: Scripts to produce a visualisation of the resulting risk bounds as per Theorems 1 and 2, depicted in Figure 4.
-    * 
+
 ## Getting Started
 
 After unpacking the artifact, the `Dockerfile` can be turned into an image by running:
@@ -77,8 +77,13 @@ Python smoke test finished successfully :)
 Our artifact builds up on the following dependencies and libraries:
 
   * [PRISM](https://github.com/prismmodelchecker/prism) - Probabilistic model checker.
+  * [FasterXML/Jackson](https://github.com/FasterXML/jackson-core) - JSON parsing library used for parsing the computed RL strategies into PRISM format.
+  * [picocli](https://github.com/remkop/picocli) - Java command line interface.
   * [NumPy](https://github.com/numpy/numpy) - Used to compute risk bounds according to Theorems 1 and 2.
+  * [scipy](https://github.com/scipy/scipy) - Used in computation of risk bounds.
   * [matplotlib](https://matplotlib.org/) - Used for visualizing the resulting risk bounds and performance plots.
+  * [pandas](https://pandas.pydata.org/) - Used in precomputation for visualising performance plots.
+
 
   
 ## License

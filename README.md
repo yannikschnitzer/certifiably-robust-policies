@@ -72,6 +72,57 @@ Python smoke test finished successfully :)
 
 ## Running Experiments
 
+### Plotting Risk Bounds as per Theorems 1 and 2, depicted in Figure 4
+
+To obtain the risk bounds for example values of $\gamma$, $\eta$ and $N$, as depicted in Figure 4, run the Python script provided in the ***Risk_Plotting*** directory:
+
+```bash
+    cd Risk_Plotting
+    python3 risk_bounds.py
+```
+This will print, for example values of $\gamma$ and $\eta$, the optimal risk bound optained via Theorems 1 and 2 in dependence of $N \in \{1,\dots,500\}$, with the automatically computed optimal $K$. Since more $K$'s have to be checked for increasing $N$, the computation will slow down with time. The overall runtime should be ~5 minutes. 
+
+The resulting plots will be put into a newly generated directory ***risk_plots*** in PDF format.
+
+### Running Case Studies and producing table rows as per Tables 2 and 4
+
+To run our case studies and produce the rows of the Tables 2 and 4, we provide a PRISM command line interface. First go into the PRISM directory:
+
+```bash
+    cd PRISM-upmdps/prism
+```
+The main function to call the tool interface is:
+
+```bash
+    PRISM_MAINCLASS=lava.LearnVerify bin/prism -arg1 [-arg2 ...]
+```
+
+which comes with the following options:
+
+* `-c`,`--casestudy`: Which case study to run, can be any of `aircraft`, `betting`, `sav`, `chain`, `drone`, `firewire`. If no case study is provided, all case studies are run in sequence.
+* `-a`,`--algorithm`(optional): Which IMDP learning algorithm to run, can be any of `LUI`, `PAC`, `MAP`, `UCRL`. The reinforcement-learning policies are evaluated for any choice, see the ***Important Remarks*** below for further information. If no algorithm is provided, all algorithms are run in sequence.
+* `-no-opt`,`--without-optimisations` (optional): Run algorithms without model-based optimisations, i.e., without parameter-tying.
+* `-seed` (optional): Integer seed for the internal pseudo-random generator. Per default each selected case study will be run for multiple seeds, the results are aggregated for visualisation.
+* `-all` (optional): Run the full benchmark set with full sample set sizes. **Note:** Very extensive with very long total runtime, see the ***Important Remarks*** below for further information. 
+* `-h`,`--help`: Show this tool help description.
+  
+**Important Remarks (please read carefully)**
+* Our full set of benchmarks is very extensive, if the full sample sizes of $N=300$ for training and verification is used. This can result in runtimes of many hours for a single case study and algorithm and a total runtime of weeks for the entire benchmark set. Therefore, we followed the suggestions of the artifact guidelines and adapted our code to run with a much smaller sample size, in order to make a feasible review time possible. We exploited regularities and monotonicities in the case studies which allows to produce (almost) identical results with less samples, by adding the extreme-case samples to the respective training and verification sets. 
+  
+* If the `-c`and `-a` options are used, these optimisations are applied. Still, the runtime of all case studies and all algorithms is expected to be multiple hours / day. 
+  
+* In accordance with the guidelines, the `-all` option can be used to run the entire benchmark set, with the full sample sizes.
+
+* During the review process we were made aware of a small mathematical error in the computation of the Wilson-score confidence intervals, this only affects our resulting bounds in the order of <0.1%. This is fixed for the camera-ready version of the paper and this artifact, this might lead to tiny deviations.
+
+* The policies obtained via Robust Meta Reinforcement Learning (RoML) are precomputed via PyTorch and the resulting policies are stored in the `prism/policies` directory. These are automatically parsed into PRISM strategies and evaluated on the MDPs / learned IMDPs for any run case study and benchmark.
+
+
+**Example Commands**
+
+Since the runtime for all case studies and algorithms can be extensive despite optimisations, we provide a range of example commands which run the quicker case studies and are expected to terminate in a reasonable time (all together in less than a working day):
+
+
 
 ## Dependencies and Libraries
 Our artifact builds up on the following dependencies and libraries:

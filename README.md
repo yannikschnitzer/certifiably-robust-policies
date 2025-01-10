@@ -54,7 +54,7 @@ We provide seperate smoke tests for the main implementation (Java) and the visua
 To run the smoke tests for the main implementation, execute the following commands:
 
 ```bash
-    cd certifiably-robust-policies/PRISM-upmdps/prism
+    cd certifiably-robust-policies/PRISM-updmps/prism
     PRISM_MAINCLASS=lava.LearnVerify bin/prism -smoke
 ```
 The script will run one small test benchmark with a reduced number of iterations which should complete in a few minutes. If finished successfully, the script should print:
@@ -90,7 +90,7 @@ The resulting plots will be put into a newly generated directory ***risk_plots**
 To run our case studies and produce the rows of the Tables 2 and 4, we provide a PRISM command line interface. First go into the PRISM directory:
 
 ```bash
-    cd PRISM-upmdps/prism
+    cd PRISM-updmps/prism
 ```
 The main function to call the tool interface is:
 

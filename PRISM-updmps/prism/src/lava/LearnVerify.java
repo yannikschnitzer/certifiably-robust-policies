@@ -447,9 +447,6 @@ public class LearnVerify implements Callable<Integer> {
                         k0risk = computeEmpiricalRisk(robstratI, ex.k0perf, 1000, ex);
                         k5risk = computeEmpiricalRisk(robstratI, ex.k5perf, 1000, ex);
                         k10risk = computeEmpiricalRisk(robstratI, ex.k10perf, 1000, ex);
-                        System.out.println("k0risk: " + k0risk);
-                        System.out.println("k5risk: " + k5risk);
-                        System.out.println("k10risk: " + k10risk);
                     }
 
                     double totalRuntime = (elapsedTimeTraining + elapsedTimeVerification);
@@ -579,8 +576,6 @@ public class LearnVerify implements Callable<Integer> {
         }
         int N = robResultsCross.size();
         double empiricalRisk = (double) numFail / (double) N;
-        System.out.println(robResultsCross.stream().sorted().toList().get(robResultsCross.size() - 3) + " " + robResultsCross.stream().sorted().toList().get(robResultsCross.size()-10) + " " + robResultsCross.stream().sorted().toList().get(robResultsCross.size()-34));
-        System.out.println("Empirical Risk: " + (empiricalRisk) + " for N = " + N + " and guarantee" + guarantee);
         return empiricalRisk;
     }
 

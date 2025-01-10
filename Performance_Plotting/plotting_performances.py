@@ -8,7 +8,7 @@ import time
 def generate_plot(relative_path, title, file_types, lower_bound=0.0, upper_bound=1.0):
     # Build base_path by going two directories up from this file
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    base_path = os.path.join(script_dir, '..', '..', relative_path)
+    base_path = os.path.join(script_dir,'..', relative_path)
     
     # Constants
     linewidth = 2
@@ -195,13 +195,17 @@ def main():
         "aircraft": 0.0,
         "betting": 0.0,
         "sav": -0.05,
-        "drone": 0.0
+        "drone": 0.0,
+        "chain": 0.0,
+        "firewire": 0.0
     }
     upper_bounds = {
         "aircraft": 0.65,
         "betting": 34.9,
         "sav": 0.84,
-        "drone": 0.8
+        "drone": 0.8,
+        "chain": 1200.0,
+        "firewire": 1.0
     }
 
     # Map case_study string to directory names below the PRISM-upmdps directory
@@ -210,7 +214,8 @@ def main():
         "betting": "BETTING_GAME_FAVOURABLE",
         "sav": "SAV2",
         "drone": "DRONE",
-        # others if needed ...
+        "chain": "CHAIN_LARGE_TWO_ACTION",
+        "firewire": "FIREWIRE"
     }
 
     # Example usage: we assume `relative_path` is something like:

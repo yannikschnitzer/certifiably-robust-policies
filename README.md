@@ -101,10 +101,10 @@ PRISM_MAINCLASS=lava.LearnVerify bin/prism -arg1 [-arg2 ...]
 which comes with the following options:
 
 * `-c`,`--casestudy`: Which case study to run, can be any of `aircraft`, `betting`, `sav`, `chain`, `drone`, `firewire`. If no case study is provided, all case studies are run in sequence.
-* `-a`,`--algorithm`(optional): Which IMDP learning algorithm to run, can be any of `LUI`, `PAC`, `MAP`, `UCRL`. The reinforcement-learning policies are evaluated for any choice, see the ***Important Remarks*** below for further information. If no algorithm is provided, all algorithms are run in sequence.
+* `-a`,`--algorithm`(optional): Which IMDP learning algorithm to run, can be any of `LUI`, `PAC`, `MAP`, `UCRL`. The RoML policies are evaluated for any choice, see the ***Important Remarks*** below for further information. If no algorithm is provided, all algorithms are run in sequence.
 * `-no-opt`,`--without-optimisations` (optional): Run algorithms without model-based optimisations, i.e., without parameter-tying.
 * `-seed` (optional): Integer seed for the internal pseudo-random generator. Per default each selected case study will be run for multiple seeds, the results are aggregated for visualisation.
-* `-all` (optional): Run the full benchmark set with full sample set sizes. **Note:** Very extensive with very long total runtime, see the ***Important Remarks*** below for further information. 
+* `-all` (optional): Run the full benchmark set with full sample set sizes. **Note:** Very extensive, with very long total runtime, see the ***Important Remarks*** below for further information. 
 * `-h`,`--help`: Show this tool help description.
   
 **Important Remarks (please read carefully)**

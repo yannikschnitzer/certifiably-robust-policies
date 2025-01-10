@@ -108,6 +108,14 @@ def generate_plot(relative_path, title, file_types, lower_bound=0.0, upper_bound
             " Performance of RL policy on MDPs",
             " Robust Guarantee on IMDPs with RL policy"
         )
+    elif "LUI_rpol_naive" in data and len(data["LUI_rpol_naive"]) > 0:
+        plot_rl(
+            data["LUI_rpol_naive"], '#ff7f0e',
+            "Episode",
+            " Performance of RL policy on MDPs",
+            " Robust Guarantee on IMDPs with RL policy"
+        )
+    
 
     # Configure plot
     plt.xlabel('# Trajectories', fontsize=14)

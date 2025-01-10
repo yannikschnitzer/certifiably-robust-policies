@@ -122,7 +122,56 @@ which comes with the following options:
 
 Since the runtime for all case studies and algorithms can be extensive despite optimisations, we provide a range of example commands which run the quicker case studies and are expected to terminate in a reasonable time (all together in less than a working day):
 
+Run the ***Aircraft*** case study with and without optimisations:
+```bash
+    PRISM_MAINCLASS=lava.LearnVerify bin/prism -c aircraft [-no-opt]
+```
 
+Run the ***Betting Game*** case study with and without optimisations:
+```bash
+    PRISM_MAINCLASS=lava.LearnVerify bin/prism -c betting [-no-opt]
+```
+
+Run the ***Semi-Autonomous Vehicle*** case study with and without optimisations:
+```bash
+    PRISM_MAINCLASS=lava.LearnVerify bin/prism -c sav [-no-opt]
+```
+
+The results are stored in the `prism/artifact_eval/results/basic` directory, split by case study, seeds (per default run on a range of random seeds), used algorithm and used optimisation (parameter-tying - "tied", and without - "naive"). For each combination there will be a *.csv* file with the full learning process and a *.yaml* file with the final results in a readable format. 
+
+To make the evaluation more enjoyable, we provide a script which automatically reads out the *.yaml* files for completed case studies and prints the final results, which form the rows of the Tables 2 and 4 (modulo **Important Remarks**). This can be run from the `TACAS25/certifiably-robust-policies` main directory with:
+
+```bash
+    python3 table_row_printer.py -c <casestudy>
+```
+
+and produces a readable output. For example:
+
+```bash
+    python3 table_row_printer.py -c betting
+
+Output:
+=== Results for Model: BETTING_GAME_FAVOURABLE ===
+IMDP policy performance on true MDPs (J): 30.785437150253898
+IMDP policy performance on IMDPs (J̃): 30.62636123828767
+RL policy performance on true MDPs (J): 28.513832442938444
+RL policy performance on IMDPs (J̃): 28.37533025861897
+existential guarantee: 30.785437150253898
+empirical risk for k = 0: 0.005
+empirical risk for k = 5: 0.016
+empirical risk for k = 10: 0.026
+runtime per 10k trajectories: 0.8721466666666667sec
+```
+
+### Visualising Case Studies and producing figures as per Figures 5 and 7
+
+We also provide a script to visualise the learning process saved in the *.csv* files, aggregated over all seeds. This can be run from the `TACAS25/certifiably-robust-policies/Performance_Plotting` directory as:
+
+```bash
+    python3 plotting_performances.py -c <casestudy> [-no_optimizations]
+```
+
+This will generate the plots as depicted in Figures 5 and 7 for the provided case study, for all completed algorithms and aggregated over all seeds. Those will be stored in the `Performance_Plotting` directory with a timestamp and in PDF format.
 
 ## Dependencies and Libraries
 Our artifact builds up on the following dependencies and libraries:

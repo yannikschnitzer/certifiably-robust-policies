@@ -62,7 +62,7 @@ The script will run one small test benchmark with a reduced number of iterations
 PRISM smoke test finished successfully :)
 ```
 
-To run the smoke tests for the visualistion scripts, run the following (**back in the main TACAS25/certifiably-robust-policies/ directory**):
+To run the smoke tests for the visualistion scripts, run the following (**back in the main TACAS25/certifiably-robust-policies directory**):
 ```bash
     python3 smoke_test.py
 ```
@@ -110,7 +110,7 @@ which comes with the following options:
 **Important Remarks (please read carefully)**
 * Our full set of benchmarks is very extensive, if the full sample sizes of $N=300$ for training and verification is used. This can result in runtimes of many hours for a single case study and algorithm and a total runtime of weeks for the entire benchmark set. Therefore, we followed the suggestions of the artifact guidelines and adapted our code to run with a much smaller sample size, in order to make a feasible review time possible. We exploited regularities and monotonicities in the case studies which allows to produce (almost) identical results with less samples, by adding the extreme-case samples to the respective training and verification sets. 
   
-* If the `-c`and `-a` options are used, these optimisations are applied. Still, the runtime of all case studies and all algorithms is expected to be multiple hours / day. 
+* If the `-c` and `-a` options are used, these optimisations are applied. Still, the runtime of all case studies and all algorithms is expected to be multiple hours / day. 
   
 * In accordance with the guidelines, the `-all` option can be used to run the entire benchmark set, with the full sample sizes.
 

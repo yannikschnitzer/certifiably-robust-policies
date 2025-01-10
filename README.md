@@ -3,7 +3,7 @@
 
 This is the artifact for the paper **"Certifiably Robust Policies for Uncertain Parametric Environments"** (TACAS 2025). 
 
-The corresponding Git repository is: https://github.com/yannikschnitzer/certifably-robust-policies.
+The corresponding Git repository is: https://github.com/yannikschnitzer/certifiably-robust-policies.
 
 We claim the artifact to be **available** and **functional**. We describe its structure and usage below.
 

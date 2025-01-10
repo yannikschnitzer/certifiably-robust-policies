@@ -172,7 +172,7 @@ We also provide a script to visualise the learning process saved in the *.csv* f
 python3 plotting_performances.py -c <casestudy> [-no_optimizations]
 ```
 
-This will generate the plots as depicted in Figures 5 and 7 for the provided case study, automatically for all completed algorithms and aggregated over all seeds. Those will be stored in the `Performance_Plotting` directory with a timestamp and in PDF format.
+This will generate the plots as depicted in Figures 5 and 7 for the provided case study, automatically for all completed algorithms and aggregated over all seeds. Those will be stored in the `Performance_Plotting` directory with a timestamp and in PDF format. For the plotting to run smoothly, the LUI algorithm should be completed at least for one seed.
 
  By default this will generate the left and the middle column figures of Figure 7 for the given case study. With the `no-optimizations` option this will produce the right column figure (if the corresponding runs are completed). As always, the `-h` option is available for help on script usage.
 

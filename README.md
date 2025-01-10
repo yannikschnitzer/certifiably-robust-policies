@@ -113,8 +113,6 @@ which comes with the following options:
   
 * In accordance with the guidelines, the `-all` option can be used to run the entire benchmark set, with the full sample sizes.
 
-* During the review process we were made aware of a small mathematical error in the computation of the Wilson-score confidence intervals, this only affects our resulting bounds in the order of <0.1%. This is fixed for the camera-ready version of the paper and this artifact, this might lead to tiny deviations.
-
 * The policies obtained via Robust Meta Reinforcement Learning (RoML) are precomputed via PyTorch and the resulting policies are stored in the `prism/policies` directory. These are automatically parsed into PRISM strategies and evaluated on the MDPs / learned IMDPs for any run case study and benchmark.
 
 

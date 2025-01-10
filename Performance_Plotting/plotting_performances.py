@@ -80,6 +80,13 @@ def generate_plot(relative_path, title, file_types, lower_bound=0.0, upper_bound
             linewidth=3, linestyle=":", color="crimson",
             label="Existential Guarantee on true MDPs", alpha=0.8
         )
+    elif "LUI_rpol_naive" in data and len(data["LUI_rpol_naive"]) > 0:
+        plt.plot(
+            data["LUI_rpol_naive"][0]["Episode"],
+            data["LUI_rpol_naive"][0]["Existential Guarantee"],
+            linewidth=3, linestyle=":", color="crimson",
+            label="Existential Guarantee on true MDPs", alpha=0.8
+        )
 
     # Plot other datasets
     for ftype in file_types:
@@ -104,13 +111,6 @@ def generate_plot(relative_path, title, file_types, lower_bound=0.0, upper_bound
     if "LUI_rpol_tied" in data and len(data["LUI_rpol_tied"]) > 0:
         plot_rl(
             data["LUI_rpol_tied"], '#ff7f0e',
-            "Episode",
-            " Performance of RL policy on MDPs",
-            " Robust Guarantee on IMDPs with RL policy"
-        )
-    elif "LUI_rpol_naive" in data and len(data["LUI_rpol_naive"]) > 0:
-        plot_rl(
-            data["LUI_rpol_naive"], '#ff7f0e',
             "Episode",
             " Performance of RL policy on MDPs",
             " Robust Guarantee on IMDPs with RL policy"

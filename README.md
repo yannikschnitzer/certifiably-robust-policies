@@ -163,6 +163,8 @@ empirical risk for k = 10: 0.026
 runtime per 10k trajectories: 0.8721466666666667sec
 ```
 
+**Note** that for this to run successfully, at least the `LUI` IMDP learning algorithm with optimisations has to be completed for the given case study.
+
 ### Visualising Case Studies and producing figures as per Figures 5 and 7
 
 We also provide a script to visualise the learning process saved in the *.csv* files, aggregated over all seeds. This can be run from the `TACAS25/certifiably-robust-policies/Performance_Plotting` directory as:

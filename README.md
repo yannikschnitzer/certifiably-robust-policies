@@ -54,8 +54,8 @@ We provide seperate smoke tests for the main implementation (Java) and the visua
 To run the smoke tests for the main implementation, execute the following commands:
 
 ```bash
-    cd certifiably-robust-policies/PRISM-updmps/prism
-    PRISM_MAINCLASS=lava.LearnVerify bin/prism -smoke
+cd certifiably-robust-policies/PRISM-updmps/prism
+PRISM_MAINCLASS=lava.LearnVerify bin/prism -smoke
 ```
 The script will run one small test benchmark with a reduced number of iterations which should complete in a few minutes. If finished successfully, the script should print:
 ```
@@ -64,7 +64,7 @@ PRISM smoke test finished successfully :)
 
 To run the smoke tests for the visualistion scripts, run the following (**back in the main TACAS25/certifiably-robust-policies directory**):
 ```bash
-    python3 smoke_test.py
+python3 smoke_test.py
 ```
 This script will check whether all required libaries are successfully installed and print their versions. If everything is set up correctly, the script will exit with:
 ```
@@ -78,8 +78,8 @@ Python smoke test finished successfully :)
 To obtain the risk bounds for example values of $\gamma$, $\eta$ and $N$, as depicted in Figure 4, run the Python script provided in the ***Risk_Plotting*** directory:
 
 ```bash
-    cd Risk_Plotting
-    python3 risk_bounds.py
+cd Risk_Plotting
+python3 risk_bounds.py
 ```
 This will print, for example values of $\gamma$ and $\eta$, the optimal risk bound optained via Theorems 1 and 2 in dependence of $N \in \{1,\dots,500\}$, with the automatically computed optimal $K$. Since more $K$'s have to be checked for increasing $N$, the computation will slow down with time. The overall runtime should be ~5 minutes. 
 
@@ -90,12 +90,12 @@ The resulting plots will be put into a newly generated directory ***risk_plots**
 To run our case studies and produce the rows of the Tables 2 and 4, we provide a PRISM command line interface. First go into the PRISM directory:
 
 ```bash
-    cd PRISM-updmps/prism
+cd PRISM-updmps/prism
 ```
 The main function to call the tool interface is:
 
 ```bash
-    PRISM_MAINCLASS=lava.LearnVerify bin/prism -arg1 [-arg2 ...]
+PRISM_MAINCLASS=lava.LearnVerify bin/prism -arg1 [-arg2 ...]
 ```
 
 which comes with the following options:
@@ -123,17 +123,17 @@ Since the runtime for all case studies and algorithms can be extensive despite o
 
 Run the ***Aircraft*** case study with and without optimisations:
 ```bash
-    PRISM_MAINCLASS=lava.LearnVerify bin/prism -c aircraft [-no-opt]
+PRISM_MAINCLASS=lava.LearnVerify bin/prism -c aircraft [-no-opt]
 ```
 
 Run the ***Betting Game*** case study with and without optimisations:
 ```bash
-    PRISM_MAINCLASS=lava.LearnVerify bin/prism -c betting [-no-opt]
+PRISM_MAINCLASS=lava.LearnVerify bin/prism -c betting [-no-opt]
 ```
 
 Run the ***Semi-Autonomous Vehicle*** case study with and without optimisations:
 ```bash
-    PRISM_MAINCLASS=lava.LearnVerify bin/prism -c sav [-no-opt]
+PRISM_MAINCLASS=lava.LearnVerify bin/prism -c sav [-no-opt]
 ```
 
 The results are stored in the `prism/artifact_eval/results/basic` directory, split by case study, seeds (per default run on a range of random seeds), used algorithm and used optimisation (parameter-tying - "tied", and without - "naive"). For each combination there will be a *.csv* file with the full learning process and a *.yaml* file with the final results in a readable format. 
@@ -141,13 +141,13 @@ The results are stored in the `prism/artifact_eval/results/basic` directory, spl
 To make the evaluation more enjoyable, we provide a script which automatically reads out the *.yaml* files for completed case studies and prints the final results, which form the rows of the Tables 2 and 4 (modulo **Important Remarks**). This can be run from the `TACAS25/certifiably-robust-policies` main directory with:
 
 ```bash
-    python3 table_row_printer.py -c <casestudy>
+python3 table_row_printer.py -c <casestudy>
 ```
 
 and produces a readable output. For example:
 
 ```bash
-    python3 table_row_printer.py -c betting
+python3 table_row_printer.py -c betting
 
 Output:
 === Results for Model: BETTING_GAME_FAVOURABLE ===
@@ -169,7 +169,7 @@ runtime per 10k trajectories: 0.8721466666666667sec
 We also provide a script to visualise the learning process saved in the *.csv* files, aggregated over all seeds. This can be run from the `TACAS25/certifiably-robust-policies/Performance_Plotting` directory as:
 
 ```bash
-    python3 plotting_performances.py -c <casestudy> [-no_optimizations]
+python3 plotting_performances.py -c <casestudy> [-no_optimizations]
 ```
 
 This will generate the plots as depicted in Figures 5 and 7 for the provided case study, automatically for all completed algorithms and aggregated over all seeds. Those will be stored in the `Performance_Plotting` directory with a timestamp and in PDF format.

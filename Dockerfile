@@ -35,14 +35,14 @@ RUN mkdir TACAS25
 WORKDIR /TACAS25
 
 # Clone repository (replace <repo-url> with the actual repository URL)
-RUN git clone https://github.com/yannikschnitzer/certifably-robust-policies.git
-WORKDIR /TACAS25/certifably-robust-policies
+RUN git clone https://github.com/yannikschnitzer/certifiably-robust-policies.git
+WORKDIR /TACAS25/certifiably-robust-policies
 
 # Install Python dependencies
 RUN pip install -r requirements.txt
 
 # Make PRISM
-WORKDIR /TACAS25/certifably-robust-policies/PRISM-updmps/prism
+WORKDIR /TACAS25/certifiably-robust-policies/PRISM-updmps/prism
 RUN make
 
 WORKDIR /TACAS25 

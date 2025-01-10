@@ -183,6 +183,9 @@ Our artifact builds up on the following dependencies and libraries:
   * [scipy](https://github.com/scipy/scipy) - Used in computation of risk bounds.
   * [matplotlib](https://matplotlib.org/) - Used for visualizing the resulting risk bounds and performance plots.
   * [pandas](https://pandas.pydata.org/) - Used in precomputation for visualising performance plots.
+  * [PyYAML](https://github.com/yaml/pyyaml) - Used to parse .yaml result files.
+  * [PyTorch](https://pytorch.org/) - Used to train policies via RoML.
+  * [Gymnasium](https://github.com/Farama-Foundation/Gymnasium) - Used to train policies via RoML.
 
 
   

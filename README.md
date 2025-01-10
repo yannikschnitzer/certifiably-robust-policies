@@ -173,7 +173,7 @@ We also provide a script to visualise the learning process saved in the *.csv* f
     python3 plotting_performances.py -c <casestudy> [-no_optimizations]
 ```
 
-This will generate the plots as depicted in Figures 5 and 7 for the provided case study, for all completed algorithms and aggregated over all seeds. Those will be stored in the `Performance_Plotting` directory with a timestamp and in PDF format. As always, the `-h` option is available for help on script usage.
+This will generate the plots as depicted in Figures 5 and 7 for the provided case study, for all completed algorithms and aggregated over all seeds. Those will be stored in the `Performance_Plotting` directory with a timestamp and in PDF format. By default this will generate the left and the middle column figure of Figure 7 for the given case study. With the `no-optimizations` option this will produce the right column figure (if the corresponding runs are completed). As always, the `-h` option is available for help on script usage.
 
 ## Dependencies and Libraries
 Our artifact builds up on the following dependencies and libraries:

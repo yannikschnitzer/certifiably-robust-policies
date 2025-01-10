@@ -18,8 +18,6 @@ The artifact contains our software and third-party software used internally. We 
 * **RAM**: 16GB
 * **Disk Space**: 32GB
 
-The setup via Docker installs all required software and dependencies. This should complete relatively quick (~10 minutes).
-
 ## Structure and Content
 
 The artifact contains a `Dockerfile` which automatically sets up the environment for evaluation. The environment is structured as follows
@@ -38,7 +36,10 @@ After unpacking the artifact, the `Dockerfile` can be turned into an image by ru
 sudo docker build -t artifact .
 ```
 
-in the directoy of the file. The image can be run in a container by executing:
+in the directoy of the file. The setup via Docker installs all required software and dependencies. This should complete relatively quick (~10 minutes).
+
+
+The image can then be run in a container by executing:
 
 ```bash
 sudo docker run -it artifact 

@@ -48,7 +48,7 @@ public class LearnVerify implements Callable<Integer> {
         this.verbose = verbose;
     }
     @CommandLine.Option(names = {"-c", "--casestudy"}, description = "Run a specific case study - \"aircraft\", \"betting\", \"sav\", \"chain\", \"drone\", \"firewire\"")
-    private String casestudy = "drone";
+    private String casestudy = "firewire";
 
     @CommandLine.Option(names = {"-a", "--algorithm"}, description = "Run a specific IMDP learning algorhtm - \"LUI\", \"PAC\", \"MAP\", \"UCRL\"")
     private String algorithm = "all";
@@ -62,18 +62,21 @@ public class LearnVerify implements Callable<Integer> {
     @CommandLine.Option(names = {"-smoke"}, description = "Run smoke test.")
     private boolean is_smoke_test = false;
 
+    @CommandLine.Option(names = {"-all"}, description = "Run all case studies with full sample sizes (Note: very extensive).")
+    private boolean full_sample_size = false;
+
     public LearnVerify(int seed) {
         this.seed = seed;
     }
-
 
     @Override
     public Integer call() throws Exception {
         if (is_smoke_test) {
             System.out.println("Starting Smoke Test.");
-            Experiment experiment = new Experiment(AIRCRAFT).config(12, 1_000, seed, true, true, 3);
+            algorithm = "LUI";
+            Experiment experiment = new Experiment(AIRCRAFT).config(12, 1_00, seed, true, true, 3);
             run_basic_algorithms(experiment.setSeed(seed));
-            System.out.println("Smoke Test finished successfully :)");
+            System.out.println("PRISM smoke test finished successfully :)");
         } else {
             basic();
         }
@@ -86,7 +89,7 @@ public class LearnVerify implements Callable<Integer> {
                 int exitCode = new CommandLine(new LearnVerify()).execute(args);
                 System.exit(exitCode);
         } else {
-            System.out.println("Starting Learning and Verification");;
+            System.out.println("Starting Learning and Verification");
             LearnVerify l = new LearnVerify();
             l.basic();
         }
@@ -105,39 +108,63 @@ public class LearnVerify implements Callable<Integer> {
 
     public void basic() {
         String id = "basic";
-        int m = 10; // = 300;
-        int n = 10; // = 200;
+
 
         System.out.println(get_seeds(seed, 5));
 
-        String algorithm = "LUI";
         boolean parameter_tying = !no_optimisations;
         System.out.println("invoked with: " + casestudy);
 
-        Experiment experiment;
-        switch (casestudy) {
-            case "aircraft" -> {
-                experiment = new Experiment(AIRCRAFT).config(12, 1_000_000, seed, parameter_tying, parameter_tying, 3).info(id);
-            }
-            case "betting" -> {
-                experiment = new Experiment(BETTING_GAME_FAVOURABLE).config(15, 1_000_000, seed, parameter_tying, parameter_tying, 4).info(id);
-            }
-            case "sav" -> {
-                experiment = new Experiment(SAV2).config(50, 1_000_000, seed, parameter_tying, parameter_tying,  2).info(id);
-            }
-            case "chain" -> {
-                experiment = new Experiment(CHAIN_LARGE_TWO_ACTION).config(100, 1_000_000, seed, parameter_tying, parameter_tying,3).setMaximisation(false).info(id);
-            }
-            case "drone" -> {
-                experiment = new Experiment(DRONE).config(100, 1_000_000, seed, parameter_tying, parameter_tying, 5).info(id);
-            }
-            default -> throw new RuntimeException("Unknown model type.");
-        }
+        if (full_sample_size) {
+            int m = 300;
+            int n = 300;
+            algorithm = "all";
 
-        System.out.println("Running with seeds: " + get_seeds(seed, experiment.numSeeds));
-        System.out.println("Running n = " + experiment.numTrainingMDPs+" and m= " + experiment.numVerificationMDPs);
-        for (int seed : get_seeds(seed, experiment.numSeeds)) {
-            run_basic_algorithms(experiment.setSeed(seed));
+            List<Experiment> experiments = new ArrayList<>();
+            experiments.add(new Experiment(AIRCRAFT).config(12, 1_000_000, seed, parameter_tying, parameter_tying, m, n, 3).info(id));
+            experiments.add(new Experiment(BETTING_GAME_FAVOURABLE).config(15, 1_000_000, seed, parameter_tying, parameter_tying,m, n, 4).info(id));
+            experiments.add(new Experiment(SAV2).config(50, 1_000_000, seed, parameter_tying, parameter_tying,m, n,  2).info(id));
+            experiments.add(new Experiment(CHAIN_LARGE_TWO_ACTION).config(100, 1_000_000, seed, parameter_tying, parameter_tying,m, n,3).setMaximisation(false).info(id));
+            experiments.add(new Experiment(DRONE).config(100, 1_000_000, seed, parameter_tying, parameter_tying,m, n, 5).info(id));
+            experiments.add(new Experiment(FIREWIRE).config(60, 1_000_000, seed, parameter_tying, parameter_tying, 5).info(id));
+
+
+            for (Experiment experiment : experiments) {
+                System.out.println("Running with seeds: " + get_seeds(seed, experiment.numSeeds));
+                System.out.println("Running n = " + experiment.numTrainingMDPs + " and m= " + experiment.numVerificationMDPs);
+                for (int seed : get_seeds(seed, experiment.numSeeds)) {
+                    run_basic_algorithms(experiment.setSeed(seed));
+                }
+            }
+        } else {
+            Experiment experiment;
+            switch (casestudy) {
+                case "aircraft" -> {
+                    experiment = new Experiment(AIRCRAFT).config(12, 1_000_000, seed, parameter_tying, parameter_tying, 3).info(id);
+                }
+                case "betting" -> {
+                    experiment = new Experiment(BETTING_GAME_FAVOURABLE).config(15, 1_000_000, seed, parameter_tying, parameter_tying, 4).info(id);
+                }
+                case "sav" -> {
+                    experiment = new Experiment(SAV2).config(50, 1_000_000, seed, parameter_tying, parameter_tying, 2).info(id);
+                }
+                case "chain" -> {
+                    experiment = new Experiment(CHAIN_LARGE_TWO_ACTION).config(100, 1_000_000, seed, parameter_tying, parameter_tying, 3).setMaximisation(false).info(id);
+                }
+                case "drone" -> {
+                    experiment = new Experiment(DRONE).config(100, 1_000_000, seed, parameter_tying, parameter_tying, 5).info(id);
+                }
+                case "firewire" -> {
+                    experiment = new Experiment(FIREWIRE).config(60, 1_000_000, seed, parameter_tying, parameter_tying, 5).info(id);
+                }
+                default -> throw new RuntimeException("Unknown model type.");
+            }
+
+            System.out.println("Running with seeds: " + get_seeds(seed, experiment.numSeeds));
+            System.out.println("Running n = " + experiment.numTrainingMDPs + " and m= " + experiment.numVerificationMDPs);
+            for (int seed : get_seeds(seed, experiment.numSeeds)) {
+                run_basic_algorithms(experiment.setSeed(seed));
+            }
         }
     }
 
@@ -260,6 +287,7 @@ public class LearnVerify implements Callable<Integer> {
                     case AIRCRAFT -> 10;
                     case CHAIN_LARGE_TWO_ACTION -> 5;
                     case DRONE -> 2;
+                    case FIREWIRE -> 5;
                     default -> throw new PrismException("Unsupported model type");
                 };
                 int beta = switch (ex.model) {
@@ -267,6 +295,7 @@ public class LearnVerify implements Callable<Integer> {
                     case AIRCRAFT -> 2;
                     case CHAIN_LARGE_TWO_ACTION -> 5;
                     case DRONE -> 20;
+                    case FIREWIRE -> 5;
                     default -> throw new PrismException("Unsupported model type");
                 };
                 BetaDistribution betaDist = BetaDistribution.of(alpha, beta);
@@ -403,14 +432,31 @@ public class LearnVerify implements Callable<Integer> {
                 if (i == trainingSet.first.getFirst().size() - 1) {
                     System.out.println("\n" + "=============================");
                     // Empirical Risk:
-                    computeEmpiricalRisk(robstratI, ex.maximisation ? Collections.min(robResultsI) : Collections.max(robResultsI), 1000, ex);
-                    computeEmpiricalRisk(robstratI, 0.7854, 1000, ex);
+                    robResultsI = robResultsI.stream().sorted().toList();
+                    robResultsIRL = robResultsIRL.stream().sorted().toList();
+
+                    double k0risk;
+                    double k5risk;
+                    double k10risk;
+
+                    if (full_sample_size) {
+                        k0risk = computeEmpiricalRisk(robstratI, ex.maximisation ? Collections.min(robResultsI) : Collections.max(robResultsI), 1000, ex);
+                        k5risk = computeEmpiricalRisk(robstratI, ex.maximisation? robResultsI.get(5) : robResultsI.get(robResultsI.size() - 5), 1000, ex);
+                        k10risk = computeEmpiricalRisk(robstratI, ex.maximisation? robResultsI.get(10) : robResultsI.get(robResultsI.size() - 10), 1000, ex);
+                    } else {
+                        k0risk = computeEmpiricalRisk(robstratI, ex.k0perf, 1000, ex);
+                        k5risk = computeEmpiricalRisk(robstratI, ex.k5perf, 1000, ex);
+                        k10risk = computeEmpiricalRisk(robstratI, ex.k10perf, 1000, ex);
+                        System.out.println("k0risk: " + k0risk);
+                        System.out.println("k5risk: " + k5risk);
+                        System.out.println("k10risk: " + k10risk);
+                    }
 
                     double totalRuntime = (elapsedTimeTraining + elapsedTimeVerification);
                     double runtimePer10k = totalRuntime / (ex.numTrainingMDPs + ex.numVerificationMDPs) / (ex.iterations / 10_000.0);
                     System.out.println("Total runtime: " + totalRuntime + "sec" + ", per 10k trajectories: " + runtimePer10k + "sec");
 
-                    ex.dumpConfiguration(makeOutputDirectory(ex), label, minIMDPRobustGuarantee, minTrueMDPRobustGuarantee, minExistentialGuarantee, minIMDPRobustGuaranteeRL, minTrueMDPRobustGuaranteeRL, totalRuntime, runtimePer10k);
+                    ex.dumpConfiguration(makeOutputDirectory(ex), label, minIMDPRobustGuarantee, minTrueMDPRobustGuarantee, minExistentialGuarantee, minIMDPRobustGuaranteeRL, minTrueMDPRobustGuaranteeRL, totalRuntime, runtimePer10k, k0risk, k5risk, k10risk);
                 }
 
                 DataProcessor dp = new DataProcessor();
@@ -464,7 +510,7 @@ public class LearnVerify implements Callable<Integer> {
         return robResultsCross;
     }
 
-    private void computeEmpiricalRisk(MDStrategy<Double> strat, double guarantee, int numEvalSamples, Experiment ex) throws PrismException {
+    private double computeEmpiricalRisk(MDStrategy<Double> strat, double guarantee, int numEvalSamples, Experiment ex) throws PrismException {
         List<Values> evaluationParams = new ArrayList<>();
         if (ex.model == SAV2) {
             // Generate uniform sample training and verification MDP parameters
@@ -483,6 +529,7 @@ public class LearnVerify implements Callable<Integer> {
                 case AIRCRAFT -> 10;
                 case CHAIN_LARGE_TWO_ACTION -> 5;
                 case DRONE -> 2;
+                case FIREWIRE -> 5;
                 default -> throw new PrismException("Unsupported model type");
             };
             int beta = switch (ex.model) {
@@ -490,6 +537,7 @@ public class LearnVerify implements Callable<Integer> {
                 case AIRCRAFT -> 2;
                 case CHAIN_LARGE_TWO_ACTION -> 5;
                 case DRONE -> 20;
+                case FIREWIRE -> 5;
                 default -> throw new PrismException("Unsupported model type");
             };
             BetaDistribution betaDist = BetaDistribution.of(alpha, beta);
@@ -531,7 +579,9 @@ public class LearnVerify implements Callable<Integer> {
         }
         int N = robResultsCross.size();
         double empiricalRisk = (double) numFail / (double) N;
-        System.out.println("Empirical Risk: " + (empiricalRisk) + " for N = " + N + " and guarantee " + guarantee);
+        System.out.println(robResultsCross.stream().sorted().toList().get(robResultsCross.size() - 3) + " " + robResultsCross.stream().sorted().toList().get(robResultsCross.size()-10) + " " + robResultsCross.stream().sorted().toList().get(robResultsCross.size()-34));
+        System.out.println("Empirical Risk: " + (empiricalRisk) + " for N = " + N + " and guarantee" + guarantee);
+        return empiricalRisk;
     }
 
     private void constructValues(double rangeMin1, double rangeMax1,double rangeMin2, double rangeMax2, List<Values> params, Random r) {
@@ -579,6 +629,9 @@ public class LearnVerify implements Callable<Integer> {
             case DRONE -> {
                 v.addValue("p", Math.min(pH, 0.32)); // Ensure valid probability distributions
             }
+            case FIREWIRE -> {
+                v.addValue("fast", pH);
+            }
             default -> {
                 throw new PrismException("Unsupported model type");
             }
@@ -625,9 +678,9 @@ public class LearnVerify implements Callable<Integer> {
              * Betting Game: p
              * Chain Large: p, q
              */
-            String[] paramNames = new String[]{"p","r","pH","pL","q"};
-            String[] paramLowerBounds = new String[]{"0","0","0","0","0"};
-            String[] paramUpperBounds = new String[]{"1","1","1","1","1"};
+            String[] paramNames = new String[]{"p","r","pH","pL","q","fast"};
+            String[] paramLowerBounds = new String[]{"0","0","0","0","0","0"};
+            String[] paramUpperBounds = new String[]{"1","1","1","1","1","1"};
             this.prism.setPRISMModelConstants(new Values(), true);
             this.prism.setParametric(paramNames, paramLowerBounds, paramUpperBounds);
             this.prism.buildModel();
